@@ -38,6 +38,8 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
+while plantlist:FindFirstChildWhichIsA("Instance") do
+end
 holditem(shovel)
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
 for _, plant in ipairs(plantlist) do 
