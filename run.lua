@@ -44,7 +44,9 @@ local function shovelall()
         if #plantlist == 0 then return end
         for _, plant in ipairs(plantlist) do 
             holditem(shovel)
-            ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
+            pcall(function()
+                ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
+            end)()
             task.wait(0.1)
         end
         plantlist = userfarm.Important.Plants_Physical:GetChildren()
