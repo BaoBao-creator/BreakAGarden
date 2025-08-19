@@ -51,8 +51,8 @@ local function shovelallplantandunfavoriteallfruit()
 end
 local function unfavoriteallitem()
     for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
-        if item.d then
-            game:GetService("ReplicatedStorage").GameEvents.Favorite_Item:FireServer(workspace.LocalPlayer.Name[item.Name])
+        if item:GetAttribute("d") then
+            item:SetAttribute("d", false)
         end
     end
 end
