@@ -52,11 +52,12 @@ end
 while plantlist:FindFirstChildWhichIsA("Instance") do
     local plantlist = userfarm.Important.Plants_Physical:GetChildren()
     for name, count in pairs(countPlants(plantlist)) do
-        for 
+        for i = count, 1, -1 do
+            ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
         
 holditem(shovel)
 
 for _, plant in ipairs(plantlist) do 
-    ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
+    
     task.wait(0.05)
 end
