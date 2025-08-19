@@ -9,7 +9,7 @@ local function holditem(tool)
     humanoid:EquipTool(tool)
 end
 local function find(wl, bl)
-    for _, item in ipairs(player.Backpack:GetChildren()) do
+    for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
         local name = item.Name
         local pass = true
         for _, ww in ipairs(wl) do
