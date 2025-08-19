@@ -41,7 +41,7 @@ end
 local shovel = find({"Shovel"}, {})
 local function shovelplant()
     while true do
-        if plantlist:FindFirstChild("Bone Blossom") == nil and plant:FindFirstChild("Candy Blossom") == nil then return end
+        if plantlist:FindFirstChild("Bone Blossom") == nil and plantlist:FindFirstChild("Candy Blossom") == nil then return end
         if plantlist:FindFirstChild("Bone Blossom") ~= nil then
             holditem(shovel)
             ReplicatedStorage.GameEvents.Remove_Item:FireServer("Bone Blossom"["1"])
