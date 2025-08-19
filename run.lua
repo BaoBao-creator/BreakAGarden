@@ -5,6 +5,13 @@ local humanoid = character:WaitForChild("Humanoid")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm
+for _, farm in ipairs(mainfarm:GetChildren()) do
+    if farm.Important.Data.Owner.Value == LocalPlayer.Name then
+        userfarm = farm
+        break
+    end
+end
+local plantlist = userfarm.Important.Plants_Physical:GetChildren()
 local function holditem(tool)
     humanoid:EquipTool(tool)
 end
@@ -32,18 +39,20 @@ local function find(wl, bl)
     end
 end
 local shovel = find({"Shovel"}, {})
-for _, farm in ipairs(mainfarm:GetChildren()) do
-    if farm.Important.Data.Owner.Value == LocalPlayer.Name then
-        userfarm = farm
-        break
+local function shovelallplantandunfavoriteallfruit()
+    while #plantlist > 0 do 
+        for _, name in ipairs(plantlist) do 
+            holditem(shovel)
+            ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
+            task.wait(0.1)
+        end
+        plantlist = userfarm.Important.Plants_Physical:GetChildren()
     end
 end
-local plantlist = userfarm.Important.Plants_Physical:GetChildren()
-while #plantlist > 0 do
-    for _, name in ipairs(plantlist) do
-        holditem(shovel)
-        ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
-        task.wait(0.01)
+local function unfavoriteallitem()
+    for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
+        if item.d then
+            game:GetService("ReplicatedStorage").GameEvents.Favorite_Item:FireServer(workspace.LocalPlayer.Name[item.Name])
+        end
     end
-    plantlist = userfarm.Important.Plants_Physical:GetChildren()
 end
