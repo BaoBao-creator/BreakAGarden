@@ -31,6 +31,7 @@ local function find(wl, bl)
         end
     end
 end
+local shovel = find({"Shovel"}, {})
 for _, farm in ipairs(mainfarm:GetChildren()) do
     if farm.Important.Data.Owner.Value == LocalPlayer.Name then
         userfarm = farm
@@ -38,6 +39,10 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
     end
 end
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
-for _, plant in ipairs(plantlist) do
-    ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
+while #plantlist > 0 do 
+    for _, plant in ipairs(plantlist) do 
+        ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
+        task.wait()
+    end
+    plantlist = userfarm.Important.Plants_Physical:GetChildren()
 end
