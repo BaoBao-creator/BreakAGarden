@@ -1,13 +1,18 @@
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local mainfarm = workspace:WaitForChild("Farm")
-local userfarm = nil
+local userfarm
 for _, farm in ipairs(mainfarm:GetChildren()) do
-  if farm.Important.Data.Owner.Value == LocalPlayer.Name then
-    userfarm = farm
-    break
-  end
+    if farm.Important.Data.Owner.Value == LocalPlayer.Name then
+        userfarm = farm
+        break
+    end
 end
-local function shovelplant(name)
-  game:GetService("ReplicatedStorage").GameEvents.Remove_Item:FireServer(workspace.Farm.Farm.Important.Plants_Physical.Cauliflower["1"])
+plants
+for _, plant in ipairs(userfarm.Important.Plants_Physical:GetChildren()) do
+    for _, model in ipairs(plant:GetChildren()) do
+        ReplicatedStorage.GameEvents.Remove_Item:FireServer(model)
+        task.wait(0.1)
+    end
 end
