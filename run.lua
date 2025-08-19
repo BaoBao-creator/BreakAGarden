@@ -1,3 +1,5 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm = nil
 for _, farm in ipairs(mainfarm:GetChildren()) do
