@@ -39,15 +39,18 @@ local function find(wl, bl)
     end
 end
 local shovel = find({"Shovel"}, {})
-local function shovelall()
+local function shovelplant()
     while true do
-        if #plantlist == 0 then return end
-        for _, plant in ipairs(plantlist) do 
+        if plantlist:FindFirstChild("Bone Blossom") == nil and plant:FindFirstChild("Candy Blossom") == nil then return end
+        if plantlist:FindFirstChild("Bone Blossom") ~= ni then
             holditem(shovel)
-            pcall(function()
-                ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
-            end)()
-            task.wait(0.1)
+            ReplicatedStorage.GameEvents.Remove_Item:FireServer("Bone Blossom"["1"])
+            task.wait(0.5)
+        end
+        if plantlist:FindFirstChild("Candy Blossom") ~= ni then
+            holditem(shovel)
+            ReplicatedStorage.GameEvents.Remove_Item:FireServer("Candy Blossom"["1"])
+            task.wait(0.5)
         end
         plantlist = userfarm.Important.Plants_Physical:GetChildren()
     end
@@ -72,4 +75,6 @@ local function unfavoriteall()
         end
     end
 end
-game:GetService("ReplicatedStorage").GameEvents.SellAllPets_RE:FireServer()
+local function sellall()
+    ReplicatedStorage.GameEvents.SellAllPets_RE:FireServer()
+end
