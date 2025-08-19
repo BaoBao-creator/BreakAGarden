@@ -9,10 +9,7 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
-plants
-for _, plant in ipairs(userfarm.Important.Plants_Physical:GetChildren()) do
-    for _, model in ipairs(plant:GetChildren()) do
-        ReplicatedStorage.GameEvents.Remove_Item:FireServer(model)
-        task.wait(0.1)
-    end
+local plantlist = userfarm.Important.Plants_Physical:GetChildren()
+for _, plant in ipairs(plantlist) do
+    ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
 end
