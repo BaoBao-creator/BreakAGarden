@@ -40,9 +40,11 @@ local function find(wl, bl)
 end
 local shovel = find({"Shovel"}, {})
 local function shovelall()
-    while #plantlist > 0 do 
+    while true do
+        if #plantlist == 0 then return end
+        for _, plant in ipairs(plantlist) do 
             holditem(shovel)
-            ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
+            ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
             task.wait(0.1)
         end
         plantlist = userfarm.Important.Plants_Physical:GetChildren()
@@ -54,16 +56,16 @@ local function unfavoriteall()
             item:SetAttribute("d", false)
         end
     end
-    for _, name in ipairs(plantlist) do 
-        if name:FindFirstChild("Fruits") ~= nil then 
-            for _, fruit in ipairs(name.Fruits:GetChildren()) do
+    for _, plant in ipairs(plantlist) do 
+        if plant:FindFirstChild("Fruits") ~= nil then 
+            for _, fruit in ipairs(plant.Fruits:GetChildren()) do
                 if fruit:GetAttribute("Favorited") then
                     fruit:SetAttribute("Favorited", false)
                 end
             end
         else
-            if name:GetAttribute("Favorited") then
-                name:SetAttribute("Favorited", false)
+            if plant:GetAttribute("Favorited") then
+                plant:SetAttribute("Favorited", false)
             end
         end
     end
