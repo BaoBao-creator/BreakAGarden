@@ -72,3 +72,4 @@ local function unfavoriteall()
         end
     end
 end
+game:GetService("ReplicatedStorage").GameEvents.SellAllPets_RE:FireServer()
