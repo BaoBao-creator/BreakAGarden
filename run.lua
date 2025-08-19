@@ -38,24 +38,12 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
-local function countPlants(plantlist)
-    local result = {}
-    for _, plant in ipairs(plantlist) do
-        if result[plant] then
-            result[plant] += 1
-        else
-            result[plant] = 1
-        end
+local plantlist = userfarm.Important.Plants_Physical:GetChildren()
+while #plantlist > 0 do
+    for _, name in ipairs(plantlist) do
+        holditem(shovel)
+        ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
+        task.wait(0.01)
     end
-    return result
-end
-holditem(shovel)
-while plantlist:FindFirstChildWhichIsA("Instance") do
-    local plantlist = userfarm.Important.Plants_Physical:GetChildren()
-    for name, count in pairs(countPlants(plantlist)) do
-        for i = count, 1, -1 do
-            ReplicatedStorage.GameEvents.Remove_Item:FireServer(name[tostring(i)])
-            task.wait(0.05)
-        end
-    end
+    plantlist = userfarm.Important.Plants_Physical:GetChildren()
 end
