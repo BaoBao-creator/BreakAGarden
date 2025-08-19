@@ -1,8 +1,12 @@
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local humanoid = character:WaitForChild("Humanoid")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm
+local function holditem(tool)
+    humanoid:EquipTool(tool)
+end
 local function find(wl, bl)
     for _, item in ipairs(player.Backpack:GetChildren()) do
         local name = item.Name
