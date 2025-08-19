@@ -3,11 +3,9 @@ local LocalPlayer = Players.LocalPlayer
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm = nil
 for _, farm in ipairs(mainfarm:GetChildren()) do
-  local imp = farm:FindFirstChild("Important")
-  local data = imp:FindFirstChild("Data")
-  local owner = data:FindFirstChild("Owner")
-  if owner.Value == LocalPlayer.Name then
+  if farm.Important.Data.Owner.Value == LocalPlayer.Name then
     userfarm = farm
+    break
   end
 end
 local function shovelplant(name)
