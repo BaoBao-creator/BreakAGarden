@@ -49,15 +49,13 @@ local function countPlants(plantlist)
     end
     return result
 end
+holditem(shovel)
 while plantlist:FindFirstChildWhichIsA("Instance") do
     local plantlist = userfarm.Important.Plants_Physical:GetChildren()
     for name, count in pairs(countPlants(plantlist)) do
         for i = count, 1, -1 do
-            ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
-        
-holditem(shovel)
-
-for _, plant in ipairs(plantlist) do 
-    
-    task.wait(0.05)
+            ReplicatedStorage.GameEvents.Remove_Item:FireServer(name[tostring(i)])
+            task.wait(0.05)
+        end
+    end
 end
