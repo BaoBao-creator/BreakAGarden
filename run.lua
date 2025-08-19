@@ -3,6 +3,29 @@ local LocalPlayer = Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm
+local function find(wl, bl)
+    for _, item in ipairs(player.Backpack:GetChildren()) do
+        local name = item.Name
+        local pass = true
+        for _, ww in ipairs(wl) do
+            if not name:find(ww) then
+                pass = false
+                break
+            end
+        end
+        if pass then
+            for _, bw in ipairs(bl) do
+                if name:find(bw) then
+                    pass = false
+                    break
+                end
+            end
+        end
+        if pass then
+            return item
+        end
+    end
+end
 for _, farm in ipairs(mainfarm:GetChildren()) do
     if farm.Important.Data.Owner.Value == LocalPlayer.Name then
         userfarm = farm
