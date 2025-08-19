@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local character = LocalPlayer.Character
 local humanoid = character:WaitForChild("Humanoid")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local mainfarm = workspace:WaitForChild("Farm")
