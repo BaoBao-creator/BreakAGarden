@@ -38,6 +38,7 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
+holditem(shovel)
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
 while #plantlist > 0 do 
     for _, plant in ipairs(plantlist) do 
