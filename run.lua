@@ -40,10 +40,7 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
 end
 holditem(shovel)
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
-while #plantlist > 0 do 
-    for _, plant in ipairs(plantlist) do 
-        ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
-        task.wait()
-    end
-    plantlist = userfarm.Important.Plants_Physical:GetChildren()
+for _, plant in ipairs(plantlist) do 
+    ReplicatedStorage.GameEvents.Remove_Item:FireServer(plant["1"])
+    task.wait(0.05)
 end
