@@ -39,9 +39,20 @@ local function find(wl, bl)
     end
 end
 local shovel = find({"Shovel"}, {})
-local function shovelallplantandunfavoriteallfruit()
+local function destroyseed()
     while #plantlist > 0 do 
-        for _, name in ipairs(plantlist) do 
+        for _, name in ipairs(plantlist) do
+            if name:FindFirstChild("Fruits") ~= nil then
+                for _, fruit in ipairs(name.Fruits:GetChildren()) do
+                    if fruit:GetAttribute("Favorited") then
+                        fruit:SetAttribute("Favorited", false)
+                    end
+                end
+            else
+                if name:GetAttribute("Favorited") then
+                    name:SetAttribute("Favorited", false)
+                end
+            end
             holditem(shovel)
             ReplicatedStorage.GameEvents.Remove_Item:FireServer(name["1"])
             task.wait(0.1)
@@ -49,7 +60,7 @@ local function shovelallplantandunfavoriteallfruit()
         plantlist = userfarm.Important.Plants_Physical:GetChildren()
     end
 end
-local function unfavoriteallitem()
+local function destroyitem()
     for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
         if item:GetAttribute("d") then
             item:SetAttribute("d", false)
