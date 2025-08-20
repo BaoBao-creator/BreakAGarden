@@ -12,13 +12,24 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
     end
 end
 local middle = userfarm.Important.Center_Point
-local petingarden = {}
+local petingardenUUID = {}
 for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
     if pet:GetAttribute("OWNER") == LocalPlayer.Name then
-        table.insert(petingarden, pet)
+        table.insert(petingardenUUID, pet:GetAttribute("UUID")
     end
 end
-local fruits = 
+local petinbackpackUUID = {}
+for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
+    if item.Name:find("Kg") and item.Name:find("Age") then
+        table.insert(petinbackpackUUID, item:GetAttribute("UUID")
+    end
+end
+local fruits = {}
+for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
+    if item.Name:find("Kg") and not item.Name:find("Age") then
+        table.insert(fruits, item)
+    end
+end
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
 local function holditem(tool)
     humanoid:EquipTool(tool)
@@ -84,10 +95,30 @@ local function unfavoriteall()
     end
 end
 local function feedall()
-    ReplicatedStorage.GameEvents.ActivePetService:FireServer("Feed","{589ef418-a05d-4d33-ba9c-6639bb42dd0c}")
+    if #petingardenUUID == 0 then
+        if #peninbackpackUUID == 0 then
+            ReplicatedStorage.GameEvents.Sell_Inventory:FireServer()
+            return
+        end
+        ReplicatedStorage.GameEvents.PetsService:FireServer("EquipPet", petinbackpackUUID[1],CFrame.new(36.5112152, 0, -78.5274582, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+        for _, fruit in ipairs(fruits) do
+            holditem(fruit)
+            ReplicatedStorage.GameEvents.ActivePetService:FireServer("Feed", petinbackpackUID[1])
+            task.wait(0.05)
+        end
+    else
+        for _, fruit in ipairs(fruits) do
+            holditem(fruit)
+            ReplicatedStorage.GameEvents.ActivePetService:FireServer("Feed", petingardenUUID[1])
+            task.wait(0.05)
+        end
+    end
+end         
 local function sellall()
+    for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
+        if pet:GetAttribute("OWNER") == LocalPlayer.Name then
+            ReplicatedStorage.GameEvents.PetsService:FireServer("UnequipPet", pet:GetAttribute("UUID"))
+        end
+    end
     ReplicatedStorage.GameEvents.SellAllPets_RE:FireServer()
-    ReplicatedStorage.GameEvents.Sell_Inventory:FireServer()
 end
-ReplicatedStorage.GameEvents.PetsService:FireServer("UnequipPet","{589ef418-a05d-4d33-ba9c-6639bb42dd0c}")
-ReplicatedStorage.GameEvents.PetsService:FireServer("EquipPet","{589ef418-a05d-4d33-ba9c-6639bb42dd0c}",CFrame.new(36.5112152, 0, -78.5274582, 1, 0, 0, 0, 1, 0, 0, 0, 1))
