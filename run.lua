@@ -77,4 +77,5 @@ local function unfavoriteall()
 end
 local function sellall()
     ReplicatedStorage.GameEvents.SellAllPets_RE:FireServer()
+    ReplicatedStorage.GameEvents.Sell_Inventory:FireServer()
 end
