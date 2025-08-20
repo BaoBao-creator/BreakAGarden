@@ -12,12 +12,13 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
     end
 end
 local middle = userfarm.Important.Center_Point
-local petingarden {}
+local petingarden = {}
 for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
     if pet:GetAttribute("OWNER") == LocalPlayer.Name then
         table.insert(petingarden, pet)
     end
 end
+local fruits = 
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
 local function holditem(tool)
     humanoid:EquipTool(tool)
