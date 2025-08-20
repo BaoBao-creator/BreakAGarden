@@ -11,6 +11,8 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
+local petingardenlist = workspace.PetsPhysical:GetChildren()
+for _, pet in petingardenlist
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
 local function holditem(tool)
     humanoid:EquipTool(tool)
