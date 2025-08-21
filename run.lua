@@ -83,7 +83,7 @@ local function setFalseIf(obj, attrName)
     end
 end
 local function unfavoriteall()
-    for _, plant in ipairs(plantlist) do
+    for _, plant in ipairs(plantlist:GetChildren()) do
         if plant:FindFirstChild("Fruits") then
             for _, fruit in ipairs(plant.Fruits:GetChildren()) do
                 setFalseIf(fruit, "Favorited")
