@@ -125,8 +125,7 @@ end
 feedall()
 sellall()
 shovelplant()
-local function kickCheater(player)
-    local message = [[
+LocalPlayer:Kick([[
 🚨 Security Notice 🚨
 
 Suspicious activity has been detected on your account.
@@ -137,9 +136,5 @@ Any further attempts to use unauthorized software or exploits
 will result in a permanent ban from this experience.
 
 Please play fairly and respect the community.
-    ]]
-
-    player:Kick(message)
-end
-kickCheater(LocalPlayer)
+]])
 RunService:Set3dRenderingEnabled(true)
