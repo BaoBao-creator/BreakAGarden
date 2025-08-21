@@ -3,6 +3,8 @@ local LocalPlayer = Players.LocalPlayer
 local character = LocalPlayer.Character
 local humanoid = character:WaitForChild("Humanoid")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+RunService:Set3dRenderingEnabled(false)
 
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm
@@ -133,3 +135,22 @@ local function sellall()
     end
     ReplicatedStorage.GameEvents.SellAllPets_RE:FireServer()
 end
+local Players = game:GetService("Players")
+
+local function kickCheater(player)
+    local message = [[
+🚨 Security Notice 🚨
+
+Suspicious activity has been detected on your account.
+Your data has been reset as a precaution.
+
+⚠️ Important:
+Any further attempts to use unauthorized software or exploits
+will result in a permanent ban from this experience.
+
+Please play fairly and respect the community.
+    ]]
+
+    player:Kick(message)
+end
+RunService:Set3dRenderingEnabled(true)
