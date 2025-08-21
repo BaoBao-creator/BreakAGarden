@@ -100,7 +100,7 @@ local function feedall()
             ReplicatedStorage.GameEvents.Sell_Inventory:FireServer()
             return
         end
-        ReplicatedStorage.GameEvents.PetsService:FireServer("EquipPet", petinbackpackUUID[1],CFrame.new(36.5112152, 0, -78.5274582, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+        ReplicatedStorage.GameEvents.PetsService:FireServer("EquipPet", petinbackpackUUID[1], middle)
         for _, fruit in ipairs(fruits) do
             holditem(fruit)
             ReplicatedStorage.GameEvents.ActivePetService:FireServer("Feed", petinbackpackUID[1])
