@@ -32,7 +32,7 @@ for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
         item:SetAttribute("d", false)
     end
 end
-local plantlist = userfarm.Important.Plants_Physical:GetChildren()
+local plantlist = userfarm.Important.Plants_Physical
 local function holditem(tool)
     humanoid:EquipTool(tool)
 end
@@ -75,7 +75,6 @@ local function shovelplant()
             ReplicatedStorage.GameEvents.Remove_Item:FireServer("Candy Blossom"["1"])
             task.wait(0.5)
         end
-        plantlist = userfarm.Important.Plants_Physical:GetChildren()
     end
 end
 local function setFalseIf(obj, attrName)
