@@ -3,6 +3,7 @@ local LocalPlayer = Players.LocalPlayer
 local character = LocalPlayer.Character
 local humanoid = character:WaitForChild("Humanoid")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
 local mainfarm = workspace:WaitForChild("Farm")
 local userfarm
 for _, farm in ipairs(mainfarm:GetChildren()) do
@@ -11,29 +12,35 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
+
 local middle = userfarm.Important.Center_Point.CFrame
-local petingardenUUID = {}
+local petingardenUUID, petinbackpackUUID, fruits = {}, {}, {}
+
 for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
     if pet:GetAttribute("OWNER") == LocalPlayer.Name then
-        table.insert(petingardenUUID, pet:GetAttribute("UUID")
+        table.insert(petingardenUUID, pet:GetAttribute("UUID"))
     end
 end
-local petinbackpackUUID = {}
+
 for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
-    if item.Name:find("Kg") and item.Name:find("Age") then
-        table.insert(petinbackpackUUID, item:GetAttribute("UUID")
+    local name = item.Name
+    if name:find("Kg") then
+        if name:find("Age") then
+            table.insert(petinbackpackUUID, item:GetAttribute("UUID"))
+        else
+            table.insert(fruits, item)
+        end
+    elseif item:GetAttribute("d") == true then
+        item:SetAttribute("d", false)
     end
 end
-local fruits = {}
-for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
-    if item.Name:find("Kg") and not item.Name:find("Age") then
-        table.insert(fruits, item)
-    end
-end
+
 local plantlist = userfarm.Important.Plants_Physical:GetChildren()
+
 local function holditem(tool)
     humanoid:EquipTool(tool)
 end
+
 local function find(wl, bl)
     for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
         local name = item.Name
@@ -57,16 +64,20 @@ local function find(wl, bl)
         end
     end
 end
+
 local shovel = find({"Shovel"}, {})
+
 local function shovelplant()
     while true do
-        if plantlist:FindFirstChild("Bone Blossom") == nil and plantlist:FindFirstChild("Candy Blossom") == nil then return end
-        if plantlist:FindFirstChild("Bone Blossom") ~= nil then
+        if not plantlist:FindFirstChild("Bone Blossom") and not plantlist:FindFirstChild("Candy Blossom") then
+            return
+        end
+        if plantlist:FindFirstChild("Bone Blossom") then
             holditem(shovel)
             ReplicatedStorage.GameEvents.Remove_Item:FireServer("Bone Blossom"["1"])
             task.wait(0.5)
         end
-        if plantlist:FindFirstChild("Candy Blossom") ~= nil then
+        if plantlist:FindFirstChild("Candy Blossom") then
             holditem(shovel)
             ReplicatedStorage.GameEvents.Remove_Item:FireServer("Candy Blossom"["1"])
             task.wait(0.5)
@@ -74,36 +85,35 @@ local function shovelplant()
         plantlist = userfarm.Important.Plants_Physical:GetChildren()
     end
 end
-local function unfavoriteall()
-    for _, item in ipairs(LocalPlayer.Backpack:GetChildren()) do
-        if item:GetAttribute("d") then
-            item:SetAttribute("d", false)
-        end
+
+local function setFalseIf(obj, attrName)
+    if obj:GetAttribute(attrName) == true then
+        obj:SetAttribute(attrName, false)
     end
-    for _, plant in ipairs(plantlist) do 
-        if plant:FindFirstChild("Fruits") ~= nil then 
+end
+
+local function unfavoriteall()
+    for _, plant in ipairs(plantlist) do
+        if plant:FindFirstChild("Fruits") then
             for _, fruit in ipairs(plant.Fruits:GetChildren()) do
-                if fruit:GetAttribute("Favorited") then
-                    fruit:SetAttribute("Favorited", false)
-                end
+                setFalseIf(fruit, "Favorited")
             end
         else
-            if plant:GetAttribute("Favorited") then
-                plant:SetAttribute("Favorited", false)
-            end
+            setFalseIf(plant, "Favorited")
         end
     end
 end
+
 local function feedall()
     if #petingardenUUID == 0 then
-        if #peninbackpackUUID == 0 then
+        if #petinbackpackUUID == 0 then
             ReplicatedStorage.GameEvents.Sell_Inventory:FireServer()
             return
         end
         ReplicatedStorage.GameEvents.PetsService:FireServer("EquipPet", petinbackpackUUID[1], middle)
         for _, fruit in ipairs(fruits) do
             holditem(fruit)
-            ReplicatedStorage.GameEvents.ActivePetService:FireServer("Feed", petinbackpackUID[1])
+            ReplicatedStorage.GameEvents.ActivePetService:FireServer("Feed", petinbackpackUUID[1])
             task.wait(0.05)
         end
     else
@@ -113,7 +123,8 @@ local function feedall()
             task.wait(0.05)
         end
     end
-end         
+end
+
 local function sellall()
     for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
         if pet:GetAttribute("OWNER") == LocalPlayer.Name then
