@@ -11,7 +11,7 @@ for _, farm in ipairs(mainfarm:GetChildren()) do
         break
     end
 end
-local middle = userfarm.Important.Center_Point
+local middle = userfarm.Important.Center_Point.CFrame
 local petingardenUUID = {}
 for _, pet in ipairs(workspace.PetsPhysical:GetChildren()) do
     if pet:GetAttribute("OWNER") == LocalPlayer.Name then
